@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>progress_steps</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="progress-container">
+        <div class="progress"></div>
+        <div class="circle active">1</div>
+        <div class="circle">2</div>
+        <div class="circle">3</div>
+        <div class="circle">4</div>
+      </div>
+      <button class="btn btn--disabled" id="prev" disabled>Prev</button>
+      <button class="btn" id="next">Next</button>
+    </div>
+    <script>
+      const prevBtn = document.querySelector("#prev");
+      const nextBtn = document.querySelector("#next");
+      const progress = document.querySelector(".progress");
+      const circle = document.querySelectorAll(".progress-container > .circle");
+      let progressCount = 0;
+
+      function handleNextBtn() {
+        if (progressCount === 0) {
+          prevBtn.classList.remove("btn--disabled");
+          prevBtn.removeAttribute("disabled");
+        } else if (progressCount === 2) {
+          nextBtn.setAttribute("disabled", true);
+          nextBtn.classList.add("btn--disabled");
+        }
+        circle[progressCount + 1].classList.add("active");
+        progress.style.width = `${33.3333 * (progressCount + 1)}%`;
+        progressCount++;
+      }
+
+      function handlePrevBtn() {
+        if (progressCount === 1) {
+          prevBtn.setAttribute("disabled", true);
+          prevBtn.classList.add("btn--disabled");
+        } else if (progressCount === 3) {
+          nextBtn.removeAttribute("disabled");
+          nextBtn.classList.remove("btn--disabled");
+        }
+        circle[progressCount].classList.remove("active");
+        progress.style.width = `${33.3333 * (progressCount - 1)}%`;
+        progressCount--;
+      }
+      nextBtn.addEventListener("click", handleNextBtn);
+      prevBtn.addEventListener("click", handlePrevBtn);
+    </script>
+  </body>
+</html>
